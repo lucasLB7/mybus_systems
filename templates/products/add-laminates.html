@@ -1,0 +1,23 @@
+{% extends 'products/base.html'%}
+{% load static bootstrap4 %}
+{% block content %}
+
+{% if message %}
+{{message}}
+{% endif %}
+
+
+
+<form method="POST" action="">
+    {% csrf_token %} 
+    {% bootstrap_form lam_form %}
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-sm" value="Add product">
+    </div>
+
+    <input type="hidden" name="next" value="{{next}}">
+</form>
+
+
+{% endblock %}
