@@ -1,0 +1,194 @@
+{% extends 'products/base.html'%}
+{% load static bootstrap4 %}
+{% load mathfilters %}
+{% block content %}
+ 
+<div class="text-center header">
+    <h1>Product overview page</h1>
+</div>
+
+
+<div id="graph-container" style="width: 100%; height: 400px; margin: 0 auto"></div>
+
+<div class="row">
+    <div class="col-sm-6 sm-6 col-md-6">
+        <div id="pie-chart-container" style="width: 100%; height: 400px; margin: 0 auto"></div>
+    </div>
+
+    <div class="col-sm-6 sm-6 col-md-6">
+        <div class="alert-box">
+                <h4><strong>{{product_count}}</strong> floors are tracked</h4>
+                <h4>Warning! Eligna wide STOCK is LOW!</h4>
+        </div>
+    </div>
+</div>
+
+<div><hr><br><br></div>
+
+
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-0 pt-1">
+
+<h1>
+    PRODUCT OVERVIEW
+
+
+<section class="row text-center placeholders">
+    <div class="col-6 col-sm-3 placeholder">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+    <h4>Label</h4>
+    <div class="text-muted">Something else</div>
+    </div>
+    <div class="col-6 col-sm-3 placeholder">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+    <h4>Label</h4>
+    <span class="text-muted">Something else</span>
+    </div>
+    <div class="col-6 col-sm-3 placeholder">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+    <h4>Label</h4>
+    <span class="text-muted">Something else</span>
+    </div>
+    <div class="col-6 col-sm-3 placeholder">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+    <h4>Label</h4>
+    <span class="text-muted">Something else</span>
+    </div>
+</section>
+
+<h2>Products available: </h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        
+    <thead>
+        <tr>
+        <th>RANGE</th>
+        <th>DATE OF ARRIVAL</th>
+        <th>REFERENCE</th>
+        <th>STOCK LEVEL</th>
+        <th>PROFIT</th>
+
+        </tr>
+    </thead>
+    {% for floor in view_all_laminate_flooring %}
+    <tbody>
+        <tr>
+        <td><a href="/product/product_by_id/{{floor.id }} ">{{floor.rangex}} <br><small>{{floor.product_name}}</small></a></td>
+        <td>{{floor.date_of_arrival | date }}</td>
+        <td>{{floor.reference}}</td>
+        <td>{{floor.quantity}} m2</td>
+        <td>{{ floor.purchase_cost|sub:floor.sales_cost }} Kes</td>
+
+
+        </tr>
+    </tbody>
+    {% endfor %}
+    </table>
+</div>
+
+</main>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block script %}
+{{ block.super }}
+
+<script>
+   
+        Highcharts.chart('graph-container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Laminate flooring costing data'
+            },
+            xAxis: {
+                categories: {{ categories|safe }}
+            },
+            series: [{
+                name: 'Sales price',
+                data: {{ sales_cost_series }},
+                color: 'green'
+            }, {
+                name: 'Purchase cost',
+                data: {{ purchase_cost_series }},
+                color: 'red'
+            }]
+        });
+
+
+        Highcharts.chart('pie-chart-container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Product stock levels overview'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'LOC FLOOR',
+                    y: 20,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'CREO',
+                    y: 23
+                }, {
+                    name: 'LARGO',
+                    y: 17
+                }, {
+                    name: 'CLASSIC',
+                    y: 12
+                }, {
+                    name: 'ELIGNA',
+                    y: 18
+                }, {
+                    name: 'ELIGNA WIDE',
+                    y: 3
+                }, {
+                    name: 'IMPRESSIVE',
+                    y: 3
+                }, {
+                    name: 'IMPRESSIVE ULTRA',
+                    y: 4
+                }]
+            }]
+        });
+
+       
+</script>
+
+
+{% endblock %}

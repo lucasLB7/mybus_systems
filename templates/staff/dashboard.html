@@ -1,0 +1,86 @@
+{% extends 'staff/base.html'%}
+{% load static bootstrap4 %}
+{% block content %}
+
+{{ block.super }}
+
+
+<!doctype html>
+<html lang="en">
+
+
+  <body>
+
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Heya {{user}}</h1>
+          <p>Welcome back! Let's see what's going on..</p>
+          <p><a class="btn btn-primary btn-lg" href="product/product_details" role="button">OVERVIEW &raquo;</a></p>
+
+
+    
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Latest products</h2>
+
+            {% for floor in view_all_laminate_flooring %}
+        <tbody>
+            <tr>
+            <td>{{floor.rangex}} <br><small>{{floor.product_name}}</small></td>
+            <td>{{floor.date_of_arrival | date }}</td>
+            <td>{{floor.reference}}</td>
+            <td>{{floor.quantity}} m2</td>
+            </tr>
+        </tbody>
+
+        {% endfor %}
+
+            <p><a class="btn btn-secondary" href="#" role="button">View product details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>ADD TO INVENTORY</h2>
+            <p>Add new laminate flooring, engineered wood or vinyls.</p>
+            <p><a class="btn btn-secondary" href="product/laminate_flooring" role="button">Manage products &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>MVP-unpopulated</h2>
+            <p>This will hold a link to another view for the cost calculation </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+
+   
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+{% endblock %}

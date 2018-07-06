@@ -17,5 +17,14 @@ class LaminateFlooringForm(forms.ModelForm):
         fields   = '__all__'
 
 
+# ///////////////////////////////////////////////////////////////
+
+
+# class SelectFlooringTypeForm(forms.ModelForm):
+
+#     class Meta:
+#         model    = 
+
+
 
 			
